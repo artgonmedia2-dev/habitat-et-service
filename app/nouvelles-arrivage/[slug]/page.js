@@ -38,34 +38,62 @@ export default async function PostPage({ params }) {
   const post = await getPost(slug);
 
   if (!post) {
-    return <div>Post not found</div>;
+    return (
+      <div className="min-h-[50vh] flex items-center justify-center bg-slate-50 text-slate-500 font-jakarta">
+        Article introuvable
+      </div>
+    );
   }
 
   return (
-    <article className="prose prose-lg mx-auto relative max-w-3xl">
-      
-      {post.thumbnail && (
-        <Image
-          src={post.thumbnail}
-          alt={post.title}
-          width={800}
-          height={450} 
-          layout="responsive"
-          className='my-4 rounded-md'
-        />
-      )}
-      {post.date && (
-      
-          <span className='block text-gray-500 text-sm underline text-right mt-2'>
-            {new Date(post.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
-          </span>
-      )}
-      <h1>{post.title}</h1>
-      <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-      >
-        {post.content}
-      </ReactMarkdown>
-    </article>
+    <div className="bg-slate-50 min-h-screen py-12 lg:py-16">
+      <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
+        {/* Back Link */}
+        <div className="mb-6">
+          <a 
+            href="/nouvelles-arrivage" 
+            className="inline-flex items-center gap-2 text-xs font-bold font-jakarta text-slate-500 hover:text-gold-ink uppercase tracking-wider transition-colors"
+          >
+            ← RETOUR AUX ARRIVAGES
+          </a>
+        </div>
+
+        <article className="bg-white p-6 sm:p-12 rounded-3xl border border-slate-200/80 shadow-xl overflow-hidden">
+          {/* Header metadata */}
+          <div className="mb-8 border-b border-slate-100 pb-6">
+            <span className="section-badge !mb-3">ARRIVAGE OFFICIEL</span>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-jakarta text-slate-900 leading-tight mb-4">
+              {post.title}
+            </h1>
+            
+            {post.date && (
+              <div className="flex items-center gap-2 text-xs font-bold font-jakarta text-slate-400 uppercase tracking-wider">
+                <span>📅 Publié le {new Date(post.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+              </div>
+            )}
+          </div>
+
+          {/* Featured Image */}
+          {post.thumbnail && (
+            <div className="relative w-full h-[320px] sm:h-[450px] rounded-2xl overflow-hidden mb-8 bg-slate-100 shadow-md">
+              <Image
+                src={post.thumbnail}
+                alt={post.title}
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+          )}
+
+          {/* Content Body */}
+          <div className="prose prose-slate prose-lg max-w-none font-sans text-slate-700 leading-relaxed">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {post.content}
+            </ReactMarkdown>
+          </div>
+        </article>
+      </div>
+    </div>
   );
 }

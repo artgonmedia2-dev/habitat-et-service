@@ -2,108 +2,107 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply font-inter text-base md:text-lg text-slate-700 bg-slate-50 antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
 
-body {
-    @apply font-inter text-[22px] text-secondary;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-jakarta font-bold text-slate-900 tracking-tight;
+  }
 }
 
+@layer components {
+  /* Glassmorphism & Surface Cards */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+  }
 
-h1,h2,h3,h4,h5,h6 {
-    @apply font-inter ;
+  .dark-glass-card {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .section-badge {
+    @apply inline-flex items-center px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest bg-gold-light text-gold-ink border border-gold/20 mb-4;
+  }
+
+  /* Luxury Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl font-semibold text-base transition-all duration-300 shadow-md active:scale-[0.98];
+  }
+
+  .btn-primary {
+    @apply bg-slate-900 text-white hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-900/20 border border-slate-800;
+  }
+
+  .btn-accent {
+    background: linear-gradient(135deg, #C59B27 0%, #E5C158 100%);
+    @apply text-slate-900 hover:opacity-95 hover:shadow-gold-glow border border-gold/30;
+  }
+
+  .btn-emerald {
+    @apply bg-emerald text-white hover:bg-emerald-hover hover:shadow-lg border border-emerald/30;
+  }
+
+  .btn-form {
+    @apply w-full py-4 px-8 text-white bg-slate-900 hover:bg-gold-ink rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-gold-glow hover:-translate-y-0.5;
+  }
+
+  .btn-pro {
+    @apply py-3.5 px-7 text-white bg-slate-900 hover:bg-gold-ink rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-gold-glow;
+  }
+
+  .nav-is-open {
+    @apply max-h-[380px] p-6 opacity-100 py-6;
+  }
 }
 
-.h1 {
-    @apply text-[64px] lg:text-[84px] leading-none;
+/* Headline accent words
+   - .headline-accent: on light backgrounds (7F6210 = 5.7:1 on white)
+   - .headline-accent-on-dark: on dark banners/hero (E5C158 = 11:1 on slate-950)
+   Solid colours instead of the former gold gradient, whose light midpoint
+   fell to 1.4:1 on white and made the word unreadable. */
+.headline-accent {
+  color: #7F6210;
 }
 
-.h2 {
-    @apply text-[50px] leading-tight;
+.headline-accent-on-dark {
+  color: #E5C158;
 }
 
-.h3 {
-    @apply text-[25px];
-}
-
-.gradient-text{
-    background-image: linear-gradient(to right, #f59e0b, #ea580c, #eab308);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    display: inline-block;
+.emerald-gradient-text {
+  background: linear-gradient(135deg, #1E3A2B 0%, #3B7A57 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .hero-title-shadow {
-    text-shadow: 2px 2px 10px rgba(16, 16, 16, 0.5);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
-.btn {
-    @apply h-[65px] px-[30px] transition-all duration-300 text-white rounded-[18px] flex items-center gap-2;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-.btn-primary {
-    @apply bg-secondary hover:bg-primary-hover;
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
 }
 
-.btn-form {
-    @apply w-full h-[60px] px-[30px] transition-all duration-300 text-white rounded-[18px] flex items-center justify-center gap-2 bg-secondary hover:bg-primary-hover mt-8;
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
 }
 
-.btn-pro {
-    @apply h-[60px] px-[30px] transition-all duration-300 text-white rounded-[18px] flex items-center justify-center gap-2 bg-secondary hover:bg-primary-hover mt-8;
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
 }
-
-.btn-accent {
-    @apply bg-accent hover:bg-accent-hover;
-}
-
-.nav-is-open {
-    @apply h-[260px] p-6;
-}
-
-
-
-
-/* .markdown-body {
-    line-height: 1.6;
-    max-width: 800px;
-    margin: 0 auto; 
-    padding: 0 1rem; 
-    font-family: 'Arial', sans-serif; 
-}
-
-.markdown-body h1 {
-    font-size: 2.5rem; 
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-}
-
-.markdown-body h2 {
-    font-size: 2rem; 
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.markdown-body h3 {
-    font-size: 1.75rem; 
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.markdown-body p {
-    font-size: 1rem; 
-    margin: 0.5rem 0;
-}
-
-.markdown-body ul,
-.markdown-body ol {
-    margin: 0.5rem 0;
-    padding-left: 1.5rem;
-}
-
-.markdown-body code {
-    background: #f4f4f4;
-    padding: 0.2em 0.4em;
-    border-radius: 4px;
-    font-size: 0.9rem; 
-} */
