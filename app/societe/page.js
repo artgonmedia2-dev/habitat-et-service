@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { FaQuoteLeft } from "react-icons/fa6";
+import VideoShowcase from "@components/VideoShowcase";
 
 const Page = () => {
   return (
@@ -15,7 +16,7 @@ const Page = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
         <div className="relative z-10 text-center px-4 max-w-3xl">
-          <span className="section-badge !mb-3">NOTRE HISTOIRE & SANG-FAIRE</span>
+          <span className="section-badge !mb-3">NOTRE HISTOIRE & SAVOIR-FAIRE</span>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-jakarta text-white tracking-tight">
             LA <span className="headline-accent-on-dark">SOCIÉTÉ</span>
           </h1>
@@ -28,25 +29,11 @@ const Page = () => {
       {/* Cinematic Video Showcase */}
       <section className="py-16 lg:py-24 container mx-auto px-4 lg:px-8">
         <div className="max-w-5xl mx-auto">
-          <div className="relative rounded-2xl overflow-hidden border-2 border-slate-200/80 shadow-2xl bg-slate-900 group">
-            <video 
-              className="w-full h-auto aspect-video object-cover" 
-              autoPlay
-              muted
-              loop
-              playsInline
-            >
-              <source src="./societe/bois_video.mp4" type="video/mp4"/>
-              Votre navigateur ne supporte pas la vidéo.
-            </video>
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
-            <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between text-white pointer-events-none">
-              <span className="text-xs font-bold font-jakarta uppercase tracking-wider bg-gold/90 text-slate-900 px-3 py-1 rounded-full">
-                PRÉSENTATION VIDÉO
-              </span>
-              <span className="text-xs text-slate-300">HABITAT & SERVICE SARL</span>
-            </div>
-          </div>
+          <VideoShowcase
+            src="/societe/bois_video.mp4"
+            poster="/home/hero2.webp"
+            sizeLabel="Vidéo de 82 Mo, idéalement en Wi-Fi"
+          />
         </div>
       </section>
 

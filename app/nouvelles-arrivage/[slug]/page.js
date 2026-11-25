@@ -8,8 +8,9 @@ import Image from 'next/image';
 // Fetch a single post based on the slug
 export async function generateStaticParams() {
   const postsDirectory = path.join(process.cwd(), '_posts/nouvelles_arrivage');
-  const filenames = fs.readdirSync(postsDirectory);
-  
+  if (!fs.existsSync(postsDirectory)) return [];
+  const filenames = fs.readdirSync(postsDirectory).filter((filename) => filename.endsWith('.md'));
+
   return filenames.map((filename) => ({
     slug: filename.replace(/\.md$/, ''),
   }));

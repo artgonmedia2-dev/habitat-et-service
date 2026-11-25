@@ -3,21 +3,18 @@ import path from 'path';
 import matter from 'gray-matter';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaArrowRight } from "react-icons/fa6";
+import { FaArrowRight, FaPhone } from "react-icons/fa6";
 
-// Fetch all posts from the markdown files
-export async function generateStaticParams() {
-  const postsDirectory = path.join(process.cwd(), '_posts/nouvelles_arrivage');
-  const filenames = fs.readdirSync(postsDirectory);
-  
-  return filenames.map((filename) => ({
-    slug: filename.replace(/\.md$/, ''),
-  }));
+const postsDirectory = path.join(process.cwd(), '_posts/nouvelles_arrivage');
+
+// Only markdown posts (the folder also holds a .gitkeep so the CMS folder exists)
+function listPostFiles() {
+  if (!fs.existsSync(postsDirectory)) return [];
+  return fs.readdirSync(postsDirectory).filter((filename) => filename.endsWith('.md'));
 }
 
-export async function getPosts() {
-  const postsDirectory = path.join(process.cwd(), '_posts/nouvelles_arrivage');
-  const filenames = fs.readdirSync(postsDirectory);
+async function getPosts() {
+  const filenames = listPostFiles();
 
   const posts = filenames.map((filename) => {
     const filePath = path.join(postsDirectory, filename);
@@ -29,7 +26,8 @@ export async function getPosts() {
     };
   });
 
-  return posts;
+  // Newest arrivals first
+  return posts.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
 }
 
 // Page component
@@ -60,6 +58,30 @@ export default async function NouvellesArrivagePage() {
       </div>
 
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+        {posts.length === 0 && (
+          <div className="max-w-2xl mx-auto bg-white rounded-2xl border border-slate-200/80 shadow-md p-8 sm:p-10 text-center">
+            <h2 className="text-2xl font-bold font-jakarta text-slate-900 mb-3">
+              Aucun arrivage publié pour l'instant
+            </h2>
+            <p className="text-slate-600 text-base leading-relaxed mb-8">
+              Nos dépôts sont réapprovisionnés régulièrement. Pour connaître le stock disponible
+              ou réserver un lot, contactez directement notre équipe commerciale.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <Link href="/contact" className="btn btn-accent text-sm">
+                Demander un devis
+              </Link>
+              <a
+                href="tel:0536358535"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-slate-300 text-slate-900 font-semibold text-sm hover:border-gold-ink hover:text-gold-ink transition-colors"
+              >
+                <FaPhone className="w-3.5 h-3.5" />
+                05 36 35 85 35
+              </a>
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post) => (
             <div 
